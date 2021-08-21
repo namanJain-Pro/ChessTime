@@ -4,7 +4,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.chessclock.databinding.FragmentClockBinding
 import java.util.*
@@ -28,6 +31,7 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
     private var player1Timer: Long = 0L
     private var player2Timer: Long = 0L
     private var toggle = false
+    private lateinit var currentPlayer: Player
     private var bonusTime = 0L
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,6 +75,28 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
                 }
             }
 
+            pauseBtn.setOnClickListener {
+                if (timerStarted) {
+                    if (timerRunning) {
+                        pauseBtn.setImageResource(R.drawable.resume)
+                        countDownTimer.cancel()
+                        timerRunning = false
+                    } else {
+                        pauseBtn.setImageResource(R.drawable.pause)
+                        startTimer(currentPlayer)
+                        timerRunning = true
+                    }
+                }
+            }
+
+            resetBtn.setOnClickListener {
+                resetTimer(initialTime)
+            }
+
+            homeBtn.setOnClickListener {
+                findNavController().navigate(R.id.action_clockFragment_to_dashboardFragment)
+            }
+
         }
 
     }
@@ -80,13 +106,15 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
             player1Timer.text = getTimeFormatted(initialTime)
             player2Timer.text = getTimeFormatted(initialTime)
         }
-
+        binding.player1.setBackgroundColor(Color.parseColor("#363636"))
+        binding.player2.setBackgroundColor(Color.parseColor("#363636"))
+        binding.timeoutText.text = "All the best"
         player1Timer = initialTime
         player2Timer = initialTime
     }
 
     private fun startTimer(player: Player) {
-
+        currentPlayer = player
         var timeLeft: Long
         if (player == Player.PLAYER1) {
             binding.player1.setBackgroundColor(Color.parseColor("#3870c9"))
@@ -110,7 +138,9 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
             }
 
             override fun onFinish() {
-
+                binding.player1.isClickable = false
+                binding.player2.isClickable = false
+                binding.timeoutText.text = "Time Out: If you wanna continue reset the clock"
             }
         }.start()
         timerRunning = true
