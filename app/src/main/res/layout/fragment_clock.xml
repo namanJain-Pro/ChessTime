@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="5"
-    tools:context=".clock.ClockFragment" >
+    tools:context=".ClockFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/player1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
+        android:elevation="8dp"
         android:minWidth="8dp"
-        app:cardElevation="8dp"
-        android:elevation="8dp">
+        app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,10 +25,10 @@
                 android:id="@+id/player1_timer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/digital_clock_font"
+                android:gravity="center"
                 android:textSize="128sp"
-                android:text="00:00"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -40,43 +40,43 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/pause_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/pause"
-            android:elevation="8dp"
             android:layout_margin="8dp"
-            android:scaleType="fitCenter"
+            android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:elevation="8dp"
             android:padding="40dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/pause" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/reset_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/reset"
-            android:elevation="8dp"
             android:layout_margin="8dp"
-            android:scaleType="fitCenter"
+            android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:elevation="8dp"
             android:padding="40dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/reset" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/home_btn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_baseline_home_24"
-            android:elevation="8dp"
             android:layout_margin="8dp"
-            android:scaleType="fitCenter"
+            android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:elevation="8dp"
             android:padding="40dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_home_24" />
 
     </LinearLayout>
 
@@ -85,9 +85,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
+        android:elevation="8dp"
         android:minWidth="8dp"
-        app:cardElevation="8dp"
-        android:elevation="8dp">
+        app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -97,10 +97,10 @@
                 android:id="@+id/player2_timer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/digital_clock_font"
+                android:gravity="center"
                 android:textSize="128sp"
-                android:text="00:00"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
