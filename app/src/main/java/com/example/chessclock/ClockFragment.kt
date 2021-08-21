@@ -57,6 +57,7 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
                     startTimer(Player.PLAYER1)
                     toggle = true
                     timerStarted = true
+                    statusVisibility(true)
                 }
             }
 
@@ -72,6 +73,7 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
                     startTimer(Player.PLAYER2)
                     toggle = false
                     timerStarted = true
+                    statusVisibility(true)
                 }
             }
 
@@ -81,10 +83,17 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
                         pauseBtn.setImageResource(R.drawable.resume)
                         countDownTimer.cancel()
                         timerRunning = false
+                        binding.player1.isClickable = false
+                        binding.player2.isClickable = false
+                        statusVisibility(false)
+                        binding.timeoutText.text = "Paused"
                     } else {
                         pauseBtn.setImageResource(R.drawable.pause)
                         startTimer(currentPlayer)
                         timerRunning = true
+                        binding.player1.isClickable = false
+                        binding.player2.isClickable = false
+                        statusVisibility(true)
                     }
                 }
             }
@@ -140,6 +149,7 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
             override fun onFinish() {
                 binding.player1.isClickable = false
                 binding.player2.isClickable = false
+                statusVisibility(false)
                 binding.timeoutText.text = "Time Out: If you wanna continue reset the clock"
             }
         }.start()
@@ -171,6 +181,16 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
         val sec: Int = ((timeInMilli / 1000) % 60).toInt()
 
         return String.format(Locale.getDefault(), "%02d:%02d", min, sec)
+    }
+
+    private fun statusVisibility(status: Boolean) {
+        if (status) {
+            binding.timeoutText.visibility = View.GONE
+            binding.timerLotti.visibility = View.VISIBLE
+        } else {
+            binding.timeoutText.visibility = View.VISIBLE
+            binding.timerLotti.visibility = View.GONE
+        }
     }
 
 }
