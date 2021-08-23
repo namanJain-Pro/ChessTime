@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/clockFragment"
-        android:name="com.example.chessclock.ClockFragment"
+        android:name="com.example.chessclock.clock.ClockFragment"
         android:label="fragment_clock"
         tools:layout="@layout/fragment_clock" >
         <action
