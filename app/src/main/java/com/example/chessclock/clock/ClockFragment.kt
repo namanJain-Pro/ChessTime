@@ -48,40 +48,34 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
                         toggle = false
                         viewModel.switch()
                         viewModel.startTimer(Player.PLAYER2)
+                        soundPool.play(tapSound, 1f, 1f, 0, 0,1f)
                         if (bonusTime != 0L) viewModel.addBonusTime(Player.PLAYER1)
                     }
                 } else {
-                    if (timerStatus != Status.PAUSED) {
-                        viewModel.startTimer(Player.PLAYER1)
-                        timerStatus = Status.RUNNING
-                        toggle = true
-                    }
-                }
-                if (timerStatus != Status.PAUSED) {
-                    switchColor()
+                    viewModel.startTimer(Player.PLAYER1)
+                    timerStatus = Status.RUNNING
+                    toggle = true
                     soundPool.play(tapSound, 1f, 1f, 0, 0,1f)
                 }
+                switchColor()
             }
 
             player2.setOnClickListener {
-                if (timerStatus == Status.RUNNING && timerStatus != Status.PAUSED) {
+                if (timerStatus == Status.RUNNING) {
                     if (!toggle) {
                         toggle = true
                         viewModel.switch()
                         viewModel.startTimer(Player.PLAYER1)
+                        soundPool.play(tapSound, 1f, 1f, 0, 0,1f)
                         if (bonusTime != 0L) viewModel.addBonusTime(Player.PLAYER2)
                     }
                 } else {
-                    if (timerStatus != Status.PAUSED) {
-                        viewModel.startTimer(Player.PLAYER2)
-                        timerStatus = Status.RUNNING
-                        toggle = false
-                    }
-                }
-                if (timerStatus != Status.PAUSED) {
-                    switchColor()
+                    viewModel.startTimer(Player.PLAYER2)
+                    timerStatus = Status.RUNNING
                     soundPool.play(tapSound, 1f, 1f, 0, 0,1f)
+                    toggle = false
                 }
+                switchColor()
             }
 
             pauseBtn.setOnClickListener {
@@ -89,13 +83,15 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
                     binding.pauseBtn.setImageResource(R.drawable.resume)
                     viewModel.pauseTimer()
                 } else {
-                    binding.pauseBtn.setImageResource(R.drawable.pause)
-                    if (toggle) {
-                        viewModel.startTimer(Player.PLAYER1)
-                    } else {
-                        viewModel.startTimer(Player.PLAYER2)
+                    if (timerStatus != Status.FINISH && timerStatus != Status.INIT) {
+                        binding.pauseBtn.setImageResource(R.drawable.pause)
+                        if (toggle) {
+                            viewModel.startTimer(Player.PLAYER1)
+                        } else {
+                            viewModel.startTimer(Player.PLAYER2)
+                        }
+                        switchColor()
                     }
-                    switchColor()
                 }
             }
 
@@ -126,12 +122,14 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
             timerStatus = viewModel.timerStatus.value!!
             when (viewModel.timerStatus.value) {
                 Status.RUNNING -> {
+                    enableClockBTN()
                     binding.timeoutText.visibility = View.GONE
                     binding.timerLotti.visibility = View.VISIBLE
                 }
 
                 Status.PAUSED -> {
                     resetColor()
+                    disableClockBTN()
                     binding.timeoutText.text = "Paused"
                     binding.timeoutText.visibility = View.VISIBLE
                     binding.timerLotti.visibility = View.GONE
@@ -139,6 +137,7 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
 
                 Status.FINISH -> {
                     resetColor()
+                    disableClockBTN()
                     soundPool.play(finishSound, 1f, 1f, 0, 0,1f)
                     binding.timeoutText.text = "Time Out: If you wanna continue reset the clock"
                     binding.timeoutText.visibility = View.VISIBLE
@@ -147,6 +146,8 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
 
                 Status.INIT -> {
                     resetColor()
+                    enableClockBTN()
+                    binding.pauseBtn.setImageResource(R.drawable.pause)
                     binding.timeoutText.text = "All the best"
                     binding.timeoutText.visibility = View.VISIBLE
                     binding.timerLotti.visibility = View.GONE
@@ -177,23 +178,18 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
     }
 
     private fun initSoundPool() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val audioAttributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
+        val audioAttributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
 
-            soundPool = SoundPool.Builder()
-                .setMaxStreams(2)
-                .setAudioAttributes(audioAttributes)
-                .build()
-        } else {
-            soundPool = SoundPool(2, AudioManager.STREAM_MUSIC, 0)
-        }
+        soundPool = SoundPool.Builder()
+            .setMaxStreams(2)
+            .setAudioAttributes(audioAttributes)
+            .build()
 
         tapSound = soundPool.load(context, R.raw.tap_sound, 1)
         finishSound = soundPool.load(context, R.raw.finish, 1)
-
     }
 
     private fun getFormattedTime(timeLeft: Long): String {
@@ -201,6 +197,16 @@ class ClockFragment : Fragment(R.layout.fragment_clock) {
         val seconds = ((timeLeft / 1000) % 60).toInt()
 
         return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+    }
+
+    private fun enableClockBTN() {
+        binding.player1.isClickable = true
+        binding.player2.isClickable = true
+    }
+
+    private fun disableClockBTN() {
+        binding.player1.isClickable = false
+        binding.player2.isClickable = false
     }
 
 }
