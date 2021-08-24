@@ -1,9 +1,10 @@
-package com.example.chessclock
+package com.example.chessclock.dashboard
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.chessclock.R
 import com.example.chessclock.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
@@ -31,6 +32,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             rapidBtn5.setOnClickListener { onButtonClicked(3600000L, 0L) }
             rapidBtn6.setOnClickListener { onButtonClicked(2700000L, 45000L) }
 
+            customTime.setOnClickListener {
+                val customTimeDialog = CustomTimeDialog()
+                customTimeDialog.show(childFragmentManager, "Custom Time")
+            }
+
         }
     }
 
@@ -38,4 +44,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val action = DashboardFragmentDirections.actionDashboardFragmentToClockFragment(initialTime, bonusTime)
         findNavController().navigate(action)
     }
+
+
 }

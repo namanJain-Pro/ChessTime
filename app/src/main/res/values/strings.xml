@@ -6,4 +6,8 @@
     <string name="blitz">Blitz</string>
     <string name="rapid">Rapid</string>
     <string name="custom">Custom</string>
+    <string name="initial_time">Initial Time</string>
+    <string name="_1_min">1 min</string>
+    <string name="_0_sec">0 sec</string>
+    <string name="bonus_time">Bonus Time</string>
 </resources>
