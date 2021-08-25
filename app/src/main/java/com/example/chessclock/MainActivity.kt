@@ -1,8 +1,8 @@
 package com.example.chessclock
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.chessclock.dashboard.CustomTimeDialog
@@ -12,6 +12,8 @@ import hotchemi.android.rate.AppRate
 class MainActivity : AppCompatActivity(), CustomTimeDialog.OnClickListener{
 
     private lateinit var navController: NavController
+    private val viewModel: SharedViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,14 +41,7 @@ class MainActivity : AppCompatActivity(), CustomTimeDialog.OnClickListener{
         val initialTimeInMills: Long = (initialTime * 60000).toLong()
         val bonusTimeInMills: Long = (bonusTime * 1000).toLong()
 
-//        val sharedPreferences = getPreferences(Context.MODE_PRIVATE) ?: return
-//        val value = sharedPreferences.getString(R.string.user_preference.toString(), null)
-//
-//        if (value == null) {
-//            with(sharedPreferences.edit()) {
-//
-//            }
-//        }
+        viewModel.addCustomTimeList(applicationContext, initialTimeInMills, bonusTimeInMills)
 
         val action = DashboardFragmentDirections.actionDashboardFragmentToClockFragment(initialTimeInMills, bonusTimeInMills)
         navController.navigate(action)

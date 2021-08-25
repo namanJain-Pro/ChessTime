@@ -350,8 +350,7 @@
                     android:background="#363636"
                     android:textColor="#29B6F6"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/custom_btn2"
@@ -362,8 +361,7 @@
                     android:background="#363636"
                     android:textColor="#29B6F6"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/custom_btn3"
@@ -374,8 +372,7 @@
                     android:background="#363636"
                     android:textColor="#29B6F6"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                    android:textStyle="bold" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,10 +1,13 @@
 package com.example.chessclock.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.chessclock.R
+import com.example.chessclock.SharedViewModel
 import com.example.chessclock.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
@@ -12,6 +15,9 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentDashboardBinding.bind(view)
+
+        val viewModel: SharedViewModel by viewModels()
+        viewModel.loadPreferences(activity?.applicationContext!!)
 
         binding.apply {
 
@@ -36,8 +42,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 val customTimeDialog = CustomTimeDialog()
                 customTimeDialog.show(childFragmentManager, "Custom Time")
             }
-
         }
+
+        viewModel.customTimeList.observe(viewLifecycleOwner, {
+            Log.d("DashboardFragment", "onViewCreated: ${viewModel.customTimeList.value.toString()}")
+        })
     }
 
     private fun onButtonClicked(initialTime: Long, bonusTime: Long) {
