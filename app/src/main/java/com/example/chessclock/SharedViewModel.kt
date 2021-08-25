@@ -1,14 +1,19 @@
 package com.example.chessclock
 
+import android.app.Application
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SharedViewModel : ViewModel() {
+const val SHARED_PREFERENCES = "user-preferences"
+const val CUSTOM_TIME = "custom-time"
 
-    private val SHARED_PREFERENCES = "user-preferences"
-    private val CUSTOM_TIME = "custom-time"
+class SharedViewModel(application: Application) : AndroidViewModel(application) {
+
+
+    private val context = application.applicationContext
 
     val customTimeList = MutableLiveData<List<String>>()
 
@@ -16,7 +21,7 @@ class SharedViewModel : ViewModel() {
         customTimeList.value = listOf()
     }
 
-    fun addCustomTimeList(context: Context, initialTimeInMills: Long, bonusTimeInMills: Long) {
+    fun addCustomTimeList(initialTimeInMills: Long, bonusTimeInMills: Long) {
         val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)
         val value = sharedPreferences.getString(CUSTOM_TIME, null)
 
@@ -24,10 +29,10 @@ class SharedViewModel : ViewModel() {
             if (value == null) {
                 val str = "$initialTimeInMills,$bonusTimeInMills"
                 putString(CUSTOM_TIME, str)
-                customTimeList.postValue(listOf(str))
+                apply()
+                customTimeList.value = listOf(str)
             } else {
                 val tempList = value.split("-") as ArrayList
-                var updatedPref = ""
                 if (tempList.size < 3) {
                     tempList.add("$initialTimeInMills,$bonusTimeInMills")
                 } else {
@@ -40,13 +45,14 @@ class SharedViewModel : ViewModel() {
                     tempList.add("$initialTimeInMills,$bonusTimeInMills")
                 }
                 customTimeList.postValue(tempList)
-                updatedPref = tempList.joinToString("-")
+                val updatedPref = tempList.joinToString("-")
                 putString(CUSTOM_TIME, updatedPref)
+                apply()
             }
         }
     }
 
-    fun loadPreferences(context: Context) {
+    fun loadPreferences() {
         val sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)
         val value = sharedPreferences.getString(CUSTOM_TIME, null)
         Log.d("SharedViewModel", "loadPreferences: $value")
@@ -55,5 +61,4 @@ class SharedViewModel : ViewModel() {
            customTimeList.postValue(tempList)
         }
     }
-
 }
