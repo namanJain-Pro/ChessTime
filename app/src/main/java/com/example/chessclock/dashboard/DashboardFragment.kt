@@ -17,7 +17,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val binding = FragmentDashboardBinding.bind(view)
 
         val viewModel: SharedViewModel by viewModels()
-        viewModel.loadPreferences(activity?.applicationContext!!)
+        viewModel.loadPreferences()
 
         binding.apply {
 

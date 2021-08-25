@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), CustomTimeDialog.OnClickListener{
         val initialTimeInMills: Long = (initialTime * 60000).toLong()
         val bonusTimeInMills: Long = (bonusTime * 1000).toLong()
 
-        viewModel.addCustomTimeList(applicationContext, initialTimeInMills, bonusTimeInMills)
+        viewModel.addCustomTimeList(initialTimeInMills, bonusTimeInMills)
 
         val action = DashboardFragmentDirections.actionDashboardFragmentToClockFragment(initialTimeInMills, bonusTimeInMills)
         navController.navigate(action)
