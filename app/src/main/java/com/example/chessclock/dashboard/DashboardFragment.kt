@@ -1,7 +1,6 @@
 package com.example.chessclock.dashboard
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -45,8 +44,57 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         }
 
         viewModel.customTimeList.observe(viewLifecycleOwner, {
-            Log.d("DashboardFragment", "onViewCreated: ${viewModel.customTimeList.value.toString()}")
+            binding.apply {
+                if (viewModel.customTimeList.value?.isNotEmpty()!!) {
+                    customLayout.visibility = View.VISIBLE
+                }
+                val initialTimeInMilli = arrayListOf<Long>()
+                val bonusTimeInMilli = arrayListOf<Long>()
+
+                for (i in it.indices.reversed()) {
+                    val tmpList = it[i].split(",")
+                    initialTimeInMilli.add(tmpList[0].toLong())
+                    bonusTimeInMilli.add(tmpList[1].toLong())
+                }
+
+                when (initialTimeInMilli.size) {
+                    1 -> {
+                        customBtn1.visibility = View.VISIBLE
+                        customBtn1.text = getFormattedText(initialTimeInMilli[0], bonusTimeInMilli[0])
+                        customBtn1.setOnClickListener{onButtonClicked(initialTimeInMilli[0], bonusTimeInMilli[0])}
+                    }
+
+                    2 -> {
+                        customBtn1.visibility = View.VISIBLE
+                        customBtn1.text = getFormattedText(initialTimeInMilli[0], bonusTimeInMilli[0])
+                        customBtn1.setOnClickListener{onButtonClicked(initialTimeInMilli[0], bonusTimeInMilli[0])}
+                        customBtn2.visibility = View.VISIBLE
+                        customBtn2.text = getFormattedText(initialTimeInMilli[1], bonusTimeInMilli[1])
+                        customBtn2.setOnClickListener{onButtonClicked(initialTimeInMilli[1], bonusTimeInMilli[1])}
+                    }
+
+                    3 -> {
+                        customBtn1.visibility = View.VISIBLE
+                        customBtn1.text = getFormattedText(initialTimeInMilli[0], bonusTimeInMilli[0])
+                        customBtn1.setOnClickListener{onButtonClicked(initialTimeInMilli[0], bonusTimeInMilli[0])}
+                        customBtn2.visibility = View.VISIBLE
+                        customBtn2.text = getFormattedText(initialTimeInMilli[1], bonusTimeInMilli[1])
+                        customBtn2.setOnClickListener{onButtonClicked(initialTimeInMilli[1], bonusTimeInMilli[1])}
+                        customBtn3.visibility = View.VISIBLE
+                        customBtn3.text = getFormattedText(initialTimeInMilli[2], bonusTimeInMilli[2])
+                        customBtn3.setOnClickListener{onButtonClicked(initialTimeInMilli[2], bonusTimeInMilli[2])}
+                    }
+                }
+            }
         })
+    }
+
+    private fun getFormattedText(initialTime: Long, bonusTime: Long): CharSequence? {
+        if (bonusTime != 0L) {
+            return "${initialTime/60000} | ${bonusTime/1000}"
+        }
+
+        return "${initialTime/60000} min"
     }
 
     private fun onButtonClicked(initialTime: Long, bonusTime: Long) {
