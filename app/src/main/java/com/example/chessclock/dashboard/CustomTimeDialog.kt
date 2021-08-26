@@ -35,8 +35,8 @@ class CustomTimeDialog : DialogFragment() {
             })
             .setPositiveButton("Ok", object : DialogInterface.OnClickListener {
                 override fun onClick(p0: DialogInterface?, p1: Int) {
-                    var initialTime: Int = 1
-                    if (p1 != 0) {
+                    var initialTime = 1
+                    if (initialTimeSeekBar.progress != 0) {
                         initialTime = initialTimeSeekBar.progress
                     }
                     val bonusTime: Int = bonusTimeSeekBar.progress
