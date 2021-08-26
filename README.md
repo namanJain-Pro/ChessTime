@@ -1,5 +1,39 @@
 # ChessClock
+![alt text](https://github.com/namanJain-Pro/ChessTime/blob/main/app/src/main/res/mipmap-xhdpi/ic_appicon.png "App icon")
 
-A Chess Clock with variety of pre-configured game time.
+A Chess Clock with variety of pre-configured game time and user can add custom time to.
 
-Simiple and clean UI.
+Simple and clean UI.
+
+This app was just an playground for me to implement different android architecture in practice.
+
+I have improve my skill while making which something useful and nice.
+
+# App Preview
+
+![alt text](https://github.com/namanJain-Pro/ChessTime/blob/main/app/src/main/res/drawable-v24/app_snaps.png "App screen shots")
+
+# License
+
+
+MIT License
+
+Copyright (c) 2021 Naman Jain
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
